@@ -129,7 +129,7 @@ public class AdapterController {
                 Coding coding2 = new Coding();
                 coding2.setSystem("http://localhost:9997/openmrs/ws/rest/v1/tr/concepts/" + obs.getFieldCode());
                 coding2.setCode(obs.getFieldCode());
-                if(!obs.getHumanReadableValues().isEmpty()) coding2.setDisplay(obs.getHumanReadableValues().get(0));
+                if (!obs.getHumanReadableValues().isEmpty()) coding2.setDisplay(obs.getHumanReadableValues().get(0));
                 typeCoding1.add(coding2);
                 codeableConcept1.setCoding(typeCoding1);
                 observation.setCode(codeableConcept1);
@@ -167,7 +167,7 @@ public class AdapterController {
                 observation.setCode(codeableConcept1);
 
                 if(!obs.getValues().isEmpty()) {
-                    if(obs.getValues().get(0) == "No") {
+                    if(obs.getValues().get(0).equals("No")) {
                         continue;
                     }
                     Quantity valueQuantity = new Quantity();
