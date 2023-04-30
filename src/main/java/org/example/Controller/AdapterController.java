@@ -6,9 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.Model.AdapterData;
 import org.example.Model.Content;
 import org.example.Model.Obs;
-import org.example.Service.AdapterService;
 import org.hl7.fhir.dstu3.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,14 +21,9 @@ import java.util.UUID;
 public class AdapterController {
 
 
-    @Autowired
-    private AdapterService adapterService;
-
     @PostMapping("/HDA-Mpower")
-    public String createBundle(@RequestBody AdapterData adapterData1)
+    public String createBundle(@RequestBody AdapterData adapterData)
             throws JsonProcessingException, ParseException {
-
-        AdapterData adapterData = adapterService.getAdapterData(adapterData1);
 
         //System.out.println(adapterData);
 
@@ -166,10 +158,7 @@ public class AdapterController {
                 codeableConcept1.setCoding(typeCoding1);
                 observation.setCode(codeableConcept1);
 
-                if(!obs.getValues().isEmpty()) {
-                    if(obs.getValues().get(0).equals("No")) {
-                        continue;
-                    }
+                if(!obs.getValues().isEmpty() & !obs.getValues().get(0).equals("No")) {
                     Quantity valueQuantity = new Quantity();
                     valueQuantity.setValue(Double.parseDouble(obs.getValues().get(0)));
                     valueQuantity.setSystem(obs.getFieldCode());
